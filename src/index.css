@@ -1,0 +1,159 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Government Polytechnic Himatnagar - IT Department
+   Design System using Lavender Dusk Palette
+   Primary: #6968A6 (Deep Lavender)
+   Secondary: #CF9893 (Dusty Rose)
+   Accent: #085078 (Deep Teal)
+*/
+
+@layer base {
+  :root {
+    /* Lavender Dusk Theme */
+    --background: 240 20% 98%;
+    --foreground: 240 10% 15%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 15%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 15%;
+
+    /* Primary: Deep Lavender #6968A6 */
+    --primary: 241 24% 53%;
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary: Dusty Rose #CF9893 */
+    --secondary: 6 35% 70%;
+    --secondary-foreground: 240 10% 15%;
+
+    /* Muted backgrounds */
+    --muted: 240 15% 95%;
+    --muted-foreground: 240 10% 40%;
+
+    /* Accent: Deep Teal #085078 */
+    --accent: 202 88% 25%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 15% 88%;
+    --input: 240 15% 88%;
+    --ring: 241 24% 53%;
+
+    --radius: 0.5rem;
+
+    /* Custom department colors */
+    --lavender: 241 24% 53%;
+    --dusty-rose: 6 35% 70%;
+    --deep-teal: 202 88% 25%;
+    --light-lavender: 241 30% 94%;
+    --light-rose: 6 50% 95%;
+    --light-teal: 202 50% 94%;
+
+    /* Gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(241 24% 53%), hsl(202 88% 25%));
+    --gradient-secondary: linear-gradient(135deg, hsl(6 35% 70%), hsl(241 24% 53%));
+    --gradient-hero: linear-gradient(135deg, hsl(202 88% 25%), hsl(241 24% 53%) 50%, hsl(6 35% 70%));
+
+    /* Sidebar */
+    --sidebar-background: 240 20% 97%;
+    --sidebar-foreground: 240 10% 25%;
+    --sidebar-primary: 241 24% 53%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 202 88% 25%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 15% 88%;
+    --sidebar-ring: 241 24% 53%;
+  }
+
+  .dark {
+    --background: 240 15% 8%;
+    --foreground: 240 10% 95%;
+
+    --card: 240 15% 12%;
+    --card-foreground: 240 10% 95%;
+
+    --popover: 240 15% 12%;
+    --popover-foreground: 240 10% 95%;
+
+    --primary: 241 30% 60%;
+    --primary-foreground: 240 15% 8%;
+
+    --secondary: 6 40% 65%;
+    --secondary-foreground: 240 15% 8%;
+
+    --muted: 240 15% 18%;
+    --muted-foreground: 240 10% 65%;
+
+    --accent: 202 70% 40%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 62% 40%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 240 15% 20%;
+    --input: 240 15% 20%;
+    --ring: 241 30% 60%;
+
+    --lavender: 241 30% 60%;
+    --dusty-rose: 6 40% 65%;
+    --deep-teal: 202 70% 40%;
+    --light-lavender: 241 20% 20%;
+    --light-rose: 6 30% 18%;
+    --light-teal: 202 40% 18%;
+
+    --sidebar-background: 240 15% 10%;
+    --sidebar-foreground: 240 10% 90%;
+    --sidebar-primary: 241 30% 60%;
+    --sidebar-primary-foreground: 240 15% 8%;
+    --sidebar-accent: 202 70% 40%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 240 15% 20%;
+    --sidebar-ring: 241 30% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-family: 'Inter', system-ui, sans-serif;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold tracking-tight;
+  }
+}
+
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+  }
+  
+  .gradient-secondary {
+    background: linear-gradient(135deg, hsl(var(--secondary)), hsl(var(--primary)));
+  }
+  
+  .gradient-hero {
+    background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--primary)) 50%, hsl(var(--secondary)));
+  }
+
+  .text-gradient {
+    background: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .glass-effect {
+    backdrop-filter: blur(12px);
+    background: hsl(var(--background) / 0.8);
+  }
+}
