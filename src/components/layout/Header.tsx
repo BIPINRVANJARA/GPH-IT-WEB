@@ -96,9 +96,9 @@ export const Header = () => {
             <div className="flex h-10 w-10 items-center justify-center rounded-lg gradient-primary">
               <span className="text-lg font-bold text-primary-foreground">IT</span>
             </div>
-            <div className="hidden sm:block">
-              <p className="text-sm font-semibold text-foreground">IT Department</p>
-              <p className="text-xs text-muted-foreground">Government Polytechnic, Himatnagar</p>
+            <div className="block">
+              <p className="text-sm font-semibold text-foreground leading-tight">IT Department</p>
+              <p className="text-[10px] sm:text-xs text-muted-foreground">Govt Polytechnic, Himatnagar</p>
             </div>
           </Link>
 
@@ -155,10 +155,10 @@ export const Header = () => {
           <Button
             variant="ghost"
             size="icon"
-            className="lg:hidden"
+            className="lg:hidden h-12 w-12"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
           >
-            {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            {mobileMenuOpen ? <X className="h-8 w-8" /> : <Menu className="h-8 w-8" />}
           </Button>
         </div>
 
