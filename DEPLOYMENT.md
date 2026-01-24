@@ -63,3 +63,27 @@ I have already initialized a Git repository for you locally. You now need to pus
 
 -   **Page Refresh 404s**: If refreshing a page gives a 404 error, ensure the `_redirects` or `netlify.toml` file is present (I have already added `netlify.toml` which handles this).
 -   **Missing Data**: Check that your Environment Variables are correct in Netlify Site Settings.
+
+## Understanding the Backend & Database
+
+You might be wondering: **"Where do I deploy the Node.js or Python backend?"**
+
+**Good news: You don't need to!**
+
+This project uses **Supabase**, which is a "Backend-as-a-Service".
+*   **The Database**: It is a hosted PostgreSQL database on the Supabase cloud.
+*   **The Backend**: Supabase provides a ready-to-use API that your frontend calls directly.
+*   **Authentication**: Managed by Supabase Auth.
+
+Your frontend interacts with Supabase using the `VITE_SUPABASE_URL` and `VITE_SUPABASE_PUBLISHABLE_KEY`. As long as these variables are set in Netlify (which you did in Step 3), your app has a fully functioning backend.
+
+## Managing the Database Schema
+
+If you ever create a **new** Supabase project for production (instead of using the same one as development), you need to set up the database tables.
+
+1.  **Locate the Migration File**: Look in your project folder at `supabase/migrations/20260120150457_....sql`.
+2.  **Open Supabase Dashboard**: Go to your project on [supabase.com](https://supabase.com).
+3.  **Go to SQL Editor**: Click the SQL icon in the left sidebar.
+4.  **Run the SQL**: Copy the content of the migration file, paste it into the editor, and click **Run**.
+
+This will recreate all your tables and policies in the new project.
