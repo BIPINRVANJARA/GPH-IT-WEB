@@ -81,9 +81,12 @@ Your frontend interacts with Supabase using the `VITE_SUPABASE_URL` and `VITE_SU
 
 If you ever create a **new** Supabase project for production (instead of using the same one as development), you need to set up the database tables.
 
-1.  **Locate the Migration File**: Look in your project folder at `supabase/migrations/20260120150457_....sql`.
+1.  **Locate the Migration Files**: You have three important migration files:
+    *   `supabase/migrations/20260120150457_....sql` (Initial Setup)
+    *   `supabase/migrations/20260124_add_missing_admin_tables.sql` (Admin Key Features)
+    *   `supabase/migrations/20260124_add_newsletter_table.sql` (Newsletter Feature)
 2.  **Open Supabase Dashboard**: Go to your project on [supabase.com](https://supabase.com).
 3.  **Go to SQL Editor**: Click the SQL icon in the left sidebar.
-4.  **Run the SQL**: Copy the content of the migration file, paste it into the editor, and click **Run**.
+4.  **Run the SQL**: Copy the content of the files and run them.
 
-This will recreate all your tables and policies in the new project.
+This will ensure all your tables (Projects, Placements, Testimonials, Newsletters) are created.

@@ -2,26 +2,29 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
-import { 
-  LogOut, 
-  Newspaper, 
-  Calendar, 
-  Image, 
-  Users, 
+import {
+  LogOut,
+  Newspaper,
+  Calendar,
+  Image,
+  Users,
   FileText,
   GraduationCap,
-  Plus,
-  Trash2,
-  Edit
+  Briefcase,
+  Code,
+  MessageSquare
 } from "lucide-react";
 import { AdminNewsSection } from "@/components/admin/AdminNewsSection";
 import { AdminEventsSection } from "@/components/admin/AdminEventsSection";
 import { AdminGallerySection } from "@/components/admin/AdminGallerySection";
 import { AdminFacultySection } from "@/components/admin/AdminFacultySection";
 import { AdminMaterialsSection } from "@/components/admin/AdminMaterialsSection";
+import { AdminProjectsSection } from "@/components/admin/AdminProjectsSection";
+import { AdminPlacementsSection } from "@/components/admin/AdminPlacementsSection";
+import { AdminTestimonialsSection } from "@/components/admin/AdminTestimonialsSection";
+import { AdminNewsletterSection } from "@/components/admin/AdminNewsletterSection";
 
 const Admin = () => {
   const [user, setUser] = useState<any>(null);
@@ -100,7 +103,7 @@ const Admin = () => {
       {/* Main Content */}
       <main className="container mx-auto px-4 py-8">
         <Tabs defaultValue="news" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 md:grid-cols-5 gap-2 h-auto p-2">
+          <TabsList className="grid w-full grid-cols-2 sm:grid-cols-4 lg:grid-cols-9 gap-2 h-auto p-2">
             <TabsTrigger value="news" className="flex items-center gap-2">
               <Newspaper className="h-4 w-4" />
               <span className="hidden sm:inline">News</span>
@@ -120,6 +123,22 @@ const Admin = () => {
             <TabsTrigger value="materials" className="flex items-center gap-2">
               <FileText className="h-4 w-4" />
               <span className="hidden sm:inline">Materials</span>
+            </TabsTrigger>
+            <TabsTrigger value="projects" className="flex items-center gap-2">
+              <Code className="h-4 w-4" />
+              <span className="hidden sm:inline">Projects</span>
+            </TabsTrigger>
+            <TabsTrigger value="placements" className="flex items-center gap-2">
+              <Briefcase className="h-4 w-4" />
+              <span className="hidden sm:inline">Placement</span>
+            </TabsTrigger>
+            <TabsTrigger value="testimonials" className="flex items-center gap-2">
+              <MessageSquare className="h-4 w-4" />
+              <span className="hidden sm:inline">Testimonials</span>
+            </TabsTrigger>
+            <TabsTrigger value="newsletter" className="flex items-center gap-2">
+              <FileText className="h-4 w-4" />
+              <span className="hidden sm:inline">Newsletter</span>
             </TabsTrigger>
           </TabsList>
 
@@ -141,6 +160,22 @@ const Admin = () => {
 
           <TabsContent value="materials">
             <AdminMaterialsSection />
+          </TabsContent>
+
+          <TabsContent value="projects">
+            <AdminProjectsSection />
+          </TabsContent>
+
+          <TabsContent value="placements">
+            <AdminPlacementsSection />
+          </TabsContent>
+
+          <TabsContent value="testimonials">
+            <AdminTestimonialsSection />
+          </TabsContent>
+
+          <TabsContent value="newsletter">
+            <AdminNewsletterSection />
           </TabsContent>
         </Tabs>
       </main>
