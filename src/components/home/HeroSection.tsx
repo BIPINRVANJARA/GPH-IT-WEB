@@ -30,7 +30,7 @@ export const HeroSection = () => {
             Government Polytechnic, Himatnagar
           </p>
           <p className="mb-10 max-w-2xl mx-auto text-base opacity-80">
-            Empowering the next generation of IT professionals with cutting-edge curriculum, 
+            Empowering the next generation of IT professionals with cutting-edge curriculum,
             industry-aligned training, and hands-on practical experience.
           </p>
 
@@ -50,7 +50,7 @@ export const HeroSection = () => {
               asChild
               size="lg"
               variant="outline"
-              className="border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10"
+              className="bg-transparent border-primary-foreground/30 text-primary-foreground hover:bg-primary-foreground/10 hover:text-primary-foreground"
             >
               <Link to="/curriculum">View Curriculum</Link>
             </Button>
