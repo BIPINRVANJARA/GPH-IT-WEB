@@ -62,22 +62,21 @@ const navigationItems = [
 ];
 
 const TopBar = () => (
-  <div className="bg-accent text-accent-foreground py-2 text-sm">
-    <div className="container flex flex-wrap items-center justify-between gap-2">
-      <div className="flex items-center gap-4">
-        <a href="tel:2772229285" className="flex items-center gap-1 hover:underline">
+  <div className="bg-accent text-accent-foreground py-1.5 text-[11px] sm:text-sm">
+    <div className="container flex flex-col sm:flex-row items-center justify-between gap-1 sm:gap-2">
+      <div className="flex items-center gap-3 sm:gap-4">
+        <a href="tel:2772229285" className="flex items-center gap-1.5 hover:underline">
           <Phone className="h-3 w-3" />
           <span>2772229285</span>
         </a>
-        <a href="mailto:gphit@gmail.com" className="flex items-center gap-1 hover:underline">
+        <a href="mailto:gphit@gmail.com" className="flex items-center gap-1.5 hover:underline">
           <Mail className="h-3 w-3" />
           <span>gphit@gmail.com</span>
         </a>
       </div>
-      <div className="flex items-center gap-1 text-xs">
+      <div className="hidden sm:flex items-center gap-1.5 text-xs">
         <MapPin className="h-3 w-3" />
-        <span className="hidden sm:inline">Government Polytechnic, Himatnagar - 383001</span>
-        <span className="sm:hidden">GP Himatnagar</span>
+        <span>Government Polytechnic, Himatnagar - 383001</span>
       </div>
     </div>
   </div>
