@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Download, Clock, Loader2, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
 
 const Timetable = () => {
