@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { HelmetProvider } from "react-helmet-async";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { PageTransition } from "@/components/PageTransition";
+import ScrollToTop from "@/components/ScrollToTop";
 
 // Pages
 import Index from "./pages/Index";
@@ -94,6 +95,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <ScrollToTop />
           <AnimatedRoutes />
         </BrowserRouter>
       </TooltipProvider>
