@@ -38,6 +38,8 @@ const Admin = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
 
+  const SUPER_ADMIN_EMAIL = "vanjarabipin32@gmail.com";
+
   useEffect(() => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       if (!session?.user) {
@@ -162,10 +164,12 @@ const Admin = () => {
               <Building className="h-4 w-4" />
               <span className="hidden sm:inline">Infrastructure</span>
             </TabsTrigger>
-            <TabsTrigger value="settings" className="flex items-center gap-2">
-              <Settings className="h-4 w-4" />
-              <span className="hidden sm:inline">Settings</span>
-            </TabsTrigger>
+            {user?.email === SUPER_ADMIN_EMAIL && (
+              <TabsTrigger value="settings" className="flex items-center gap-2">
+                <Settings className="h-4 w-4" />
+                <span className="hidden sm:inline">Settings</span>
+              </TabsTrigger>
+            )}
           </TabsList>
 
           <TabsContent value="news">
@@ -220,9 +224,11 @@ const Admin = () => {
             <AdminInfrastructureSection />
           </TabsContent>
 
-          <TabsContent value="settings">
-            <AdminSettingsSection />
-          </TabsContent>
+          {user?.email === SUPER_ADMIN_EMAIL && (
+            <TabsContent value="settings">
+              <AdminSettingsSection />
+            </TabsContent>
+          )}
         </Tabs>
       </main>
     </div>
