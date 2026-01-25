@@ -23,6 +23,9 @@ import ExpertLectures from "./pages/ExpertLectures";
 import FinishingSchool from "./pages/FinishingSchool";
 import Newsletter from "./pages/Newsletter";
 import Resources from "./pages/Resources";
+import Timetable from "./pages/Timetable";
+import Assignment from "./pages/Assignment";
+import LabManual from "./pages/LabManual";
 import StudentProjects from "./pages/StudentProjects";
 import Placement from "./pages/Placement";
 import Links from "./pages/Links";
@@ -35,44 +38,47 @@ const queryClient = new QueryClient();
 
 const AnimatedRoutes = () => {
   const location = useLocation();
-  
+
   return (
     <PageTransition key={location.pathname}>
       <Routes location={location}>
         <Route path="/" element={<Index />} />
-        
+
         {/* About Section */}
         <Route path="/about" element={<About />} />
         <Route path="/infrastructure" element={<Infrastructure />} />
         <Route path="/faculty" element={<Faculty />} />
         <Route path="/testimonials" element={<Testimonials />} />
         <Route path="/gallery" element={<Gallery />} />
-        
+
         {/* Academics Section */}
         <Route path="/academic-calendar" element={<AcademicCalendar />} />
         <Route path="/curriculum" element={<Curriculum />} />
         <Route path="/student-policy" element={<StudentPolicy />} />
         <Route path="/assessment-policy" element={<AssessmentPolicy />} />
         <Route path="/mentoring-policy" element={<MentoringPolicy />} />
-        
+
         {/* Students Section */}
         <Route path="/study-material" element={<StudyMaterial />} />
         <Route path="/expert-lectures" element={<ExpertLectures />} />
         <Route path="/finishing-school" element={<FinishingSchool />} />
         <Route path="/newsletter" element={<Newsletter />} />
         <Route path="/resources" element={<Resources />} />
+        <Route path="/timetable" element={<Timetable />} />
+        <Route path="/assignment" element={<Assignment />} />
+        <Route path="/lab-manual" element={<LabManual />} />
         <Route path="/student-projects" element={<StudentProjects />} />
-        
+
         {/* Other Pages */}
         <Route path="/news" element={<News />} />
         <Route path="/placement" element={<Placement />} />
         <Route path="/links" element={<Links />} />
         <Route path="/contact" element={<Contact />} />
-        
+
         {/* Auth & Admin */}
         <Route path="/auth" element={<Auth />} />
         <Route path="/admin" element={<Admin />} />
-        
+
         {/* Catch-all */}
         <Route path="*" element={<NotFound />} />
       </Routes>

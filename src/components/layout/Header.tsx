@@ -35,6 +35,9 @@ const navigationItems = [
   {
     title: "Students",
     items: [
+      { title: "Timetable", href: "/timetable", description: "Class schedules" },
+      { title: "Assignments", href: "/assignment", description: "Submission deadlines" },
+      { title: "Lab Manuals", href: "/lab-manual", description: "Practical guides" },
       { title: "Study Material", href: "/study-material", description: "Notes and resources" },
       { title: "Expert Lectures", href: "/expert-lectures", description: "Guest sessions" },
       { title: "Finishing School", href: "/finishing-school", description: "Skill development" },
