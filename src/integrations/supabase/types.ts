@@ -383,6 +383,105 @@ export type Database = {
         }
         Relationships: []
       }
+      timetables: {
+        Row: {
+          created_at: string
+          division: string | null
+          file_url: string
+          id: string
+          is_published: boolean | null
+          semester: number | null
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          division?: string | null
+          file_url: string
+          id?: string
+          is_published?: boolean | null
+          semester?: number | null
+          title: string
+        }
+        Update: {
+          created_at?: string
+          division?: string | null
+          file_url?: string
+          id?: string
+          is_published?: boolean | null
+          semester?: number | null
+          title?: string
+        }
+        Relationships: []
+      }
+      assignments: {
+        Row: {
+          created_at: string
+          due_date: string | null
+          file_type: string | null
+          file_url: string
+          id: string
+          is_published: boolean | null
+          semester: number | null
+          subject: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          due_date?: string | null
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_published?: boolean | null
+          semester?: number | null
+          subject: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          due_date?: string | null
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_published?: boolean | null
+          semester?: number | null
+          subject?: string
+          title?: string
+        }
+        Relationships: []
+      }
+      lab_manuals: {
+        Row: {
+          created_at: string
+          file_type: string | null
+          file_url: string
+          id: string
+          is_published: boolean | null
+          semester: number | null
+          subject: string
+          title: string
+        }
+        Insert: {
+          created_at?: string
+          file_type?: string | null
+          file_url: string
+          id?: string
+          is_published?: boolean | null
+          semester?: number | null
+          subject: string
+          title: string
+        }
+        Update: {
+          created_at?: string
+          file_type?: string | null
+          file_url?: string
+          id?: string
+          is_published?: boolean | null
+          semester?: number | null
+          subject?: string
+          title?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

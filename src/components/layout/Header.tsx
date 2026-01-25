@@ -96,8 +96,17 @@ export const Header = () => {
         <div className="container flex h-16 items-center justify-between">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <div className="flex h-10 w-10 items-center justify-center rounded-lg gradient-primary">
-              <span className="text-lg font-bold text-primary-foreground">IT</span>
+            <div className="flex items-center gap-2">
+              <img
+                src="/images/college_logo.png"
+                alt="College Logo"
+                className="h-10 w-10 object-contain"
+              />
+              <img
+                src="/images/dept_logo.png"
+                alt="Department Logo"
+                className="h-10 w-10 object-contain"
+              />
             </div>
             <div className="block">
               <p className="text-sm font-semibold text-foreground leading-tight">IT Department</p>

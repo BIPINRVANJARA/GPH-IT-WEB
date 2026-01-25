@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ClipboardList, FileText, Loader2, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import SEO from "@/components/SEO";
 // import { supabase } from "@/integrations/supabase/client";
 
 const Assignment = () => {
@@ -29,6 +30,11 @@ const Assignment = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Assignments"
+                description="View and download assignments for all semesters."
+                keywords="Assignments, Homework, Submission, IP Department"
+            />
             {/* Hero */}
             <section className="gradient-primary py-16 text-primary-foreground">
                 <div className="container">

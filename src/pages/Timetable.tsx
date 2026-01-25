@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Calendar, Download, Clock, Loader2, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import SEO from "@/components/SEO";
 // import { supabase } from "@/integrations/supabase/client";
 
 const Timetable = () => {
@@ -37,6 +38,11 @@ const Timetable = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Timetable"
+                description="Check academic schedules and class timings for IP Department."
+                keywords="Timetable, Schedule, Lectures, IP Department"
+            />
             {/* Hero */}
             <section className="gradient-primary py-16 text-primary-foreground">
                 <div className="container">

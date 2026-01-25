@@ -4,6 +4,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { BookOpen, Book, Loader2, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
+import SEO from "@/components/SEO";
 // import { supabase } from "@/integrations/supabase/client";
 
 const LabManual = () => {
@@ -29,6 +30,11 @@ const LabManual = () => {
 
     return (
         <Layout>
+            <SEO
+                title="Lab Manuals"
+                description="Download practical lab manuals for all subjects."
+                keywords="Lab Manuals, Practical, Experiments, IP Department"
+            />
             {/* Hero */}
             <section className="gradient-primary py-16 text-primary-foreground">
                 <div className="container">

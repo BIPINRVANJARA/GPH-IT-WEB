@@ -29,8 +29,18 @@ export const Footer = () => {
           {/* About Section */}
           <div className="space-y-4">
             <div className="flex items-center gap-3">
-              <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary-foreground/20">
-                <span className="text-lg font-bold">IT</span>
+
+              <div className="flex items-center gap-2">
+                <img
+                  src="/images/college_logo.png"
+                  alt="College Logo"
+                  className="h-10 w-10 object-contain"
+                />
+                <img
+                  src="/images/dept_logo.png"
+                  alt="Department Logo"
+                  className="h-10 w-10 object-contain"
+                />
               </div>
               <div>
                 <p className="font-semibold">IT Department</p>
@@ -38,7 +48,7 @@ export const Footer = () => {
               </div>
             </div>
             <p className="text-sm opacity-80">
-              Empowering students with cutting-edge technology education and practical skills 
+              Empowering students with cutting-edge technology education and practical skills
               for a successful career in Information Technology.
             </p>
           </div>
@@ -84,7 +94,7 @@ export const Footer = () => {
               <li className="flex items-start gap-2 text-sm">
                 <MapPin className="mt-0.5 h-4 w-4 flex-shrink-0" />
                 <span className="opacity-80">
-                  Government Polytechnic, Near GMERS Civil Hospital, Gadhoda Road, 
+                  Government Polytechnic, Near GMERS Civil Hospital, Gadhoda Road,
                   Motipura, Himatnagar - 383001 (Sabarkantha)
                 </span>
               </li>
