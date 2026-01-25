@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Phone, Mail, MapPin, Clock, Send } from "lucide-react";
-import { toast } from "sonner";
+
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -17,12 +17,7 @@ const Contact = () => {
     message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    // TODO: Implement form submission with backend
-    toast.success("Message sent successfully! We'll get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-  };
+
 
   return (
     <Layout>
@@ -114,12 +109,19 @@ const Contact = () => {
               <h2 className="text-2xl font-bold mb-6">Send us a Message</h2>
               <Card>
                 <CardContent className="p-6">
-                  <form onSubmit={handleSubmit} className="space-y-4">
+                  <form action="https://formsubmit.co/vanjarabipin32@gmail.com" method="POST" className="space-y-4">
+                    {/* FormSubmit Configuration */}
+                    <input type="hidden" name="_subject" value="New Message from IT Website" />
+                    <input type="hidden" name="_captcha" value="false" />
+                    <input type="hidden" name="_next" value="https://itgph.netlify.app/contact" />
+                    <input type="hidden" name="_template" value="table" />
+
                     <div className="grid gap-4 sm:grid-cols-2">
                       <div className="space-y-2">
                         <Label htmlFor="name">Full Name</Label>
                         <Input
                           id="name"
+                          name="name"
                           placeholder="Your name"
                           value={formData.name}
                           onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -130,6 +132,7 @@ const Contact = () => {
                         <Label htmlFor="email">Email</Label>
                         <Input
                           id="email"
+                          name="email"
                           type="email"
                           placeholder="your@email.com"
                           value={formData.email}
@@ -143,6 +146,7 @@ const Contact = () => {
                         <Label htmlFor="phone">Phone</Label>
                         <Input
                           id="phone"
+                          name="phone"
                           placeholder="Your phone number"
                           value={formData.phone}
                           onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
@@ -152,6 +156,7 @@ const Contact = () => {
                         <Label htmlFor="subject">Subject</Label>
                         <Input
                           id="subject"
+                          name="subject"
                           placeholder="Message subject"
                           value={formData.subject}
                           onChange={(e) => setFormData({ ...formData, subject: e.target.value })}
@@ -163,6 +168,7 @@ const Contact = () => {
                       <Label htmlFor="message">Message</Label>
                       <Textarea
                         id="message"
+                        name="message"
                         placeholder="Your message..."
                         rows={5}
                         value={formData.message}
