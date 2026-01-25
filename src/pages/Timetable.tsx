@@ -7,6 +7,8 @@ import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
+import { timetableData } from "@/data/timetableData";
+import { TimetableGrid } from "@/components/TimetableGrid";
 
 const Timetable = () => {
     const { data: timetables, isLoading } = useQuery({
@@ -33,7 +35,9 @@ const Timetable = () => {
         return acc;
     }, {} as Record<number, any[]>) || {};
 
-    const semesters = Object.keys(timetablesBySemester).map(Number).sort((a, b) => a - b);
+    const staticSemesters = timetableData.map(t => t.semester);
+    const dbSemesters = Object.keys(timetablesBySemester).map(Number);
+    const allSemesters = Array.from(new Set([...staticSemesters, ...dbSemesters])).sort((a, b) => a - b);
 
     return (
         <Layout>
@@ -59,14 +63,14 @@ const Timetable = () => {
                         <div className="flex items-center gap-3">
                             <Calendar className="h-6 w-6 text-primary" />
                             <div>
-                                <p className="font-bold">{timetables?.length || 0}</p>
+                                <p className="font-bold">{timetableData.length + (timetables?.length || 0)}</p>
                                 <p className="text-sm text-muted-foreground">Schedules</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3">
                             <Clock className="h-6 w-6 text-primary" />
                             <div>
-                                <p className="font-bold">{semesters.length}</p>
+                                <p className="font-bold">{allSemesters.length}</p>
                                 <p className="text-sm text-muted-foreground">Semesters</p>
                             </div>
                         </div>
@@ -81,56 +85,97 @@ const Timetable = () => {
                         <div className="flex items-center justify-center py-12">
                             <Loader2 className="h-8 w-8 animate-spin text-primary" />
                         </div>
-                    ) : semesters.length > 0 ? (
-                        <div className="space-y-8">
-                            {semesters.map((semester) => (
-                                <Card key={semester}>
-                                    <CardHeader>
-                                        <CardTitle className="flex items-center gap-2">
-                                            <Calendar className="h-5 w-5 text-primary" />
-                                            {semester === 0 ? "General" : `Semester ${semester}`}
-                                        </CardTitle>
-                                    </CardHeader>
-                                    <CardContent>
-                                        <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-                                            {timetablesBySemester[semester]?.map((item: any) => (
-                                                <div
-                                                    key={item.id}
-                                                    className="flex items-center justify-between p-4 rounded-lg border hover:bg-muted/50 transition-colors"
-                                                >
-                                                    <div className="flex items-center gap-3 flex-1 min-w-0">
-                                                        <Calendar className="h-5 w-5 text-muted-foreground shrink-0" />
-                                                        <div className="min-w-0">
-                                                            <p className="font-medium truncate">{item.title}</p>
-                                                            <div className="flex items-center gap-2 mt-1">
-                                                                {item.division && (
-                                                                    <Badge variant="secondary" className="text-xs">
-                                                                        Div {item.division}
-                                                                    </Badge>
-                                                                )}
+                    ) : allSemesters.length > 0 ? (
+                        <Tabs defaultValue={allSemesters[0].toString()} className="space-y-8">
+                            <TabsList className="flex flex-wrap h-auto gap-2 bg-transparent justify-center">
+                                {allSemesters.map((semester) => (
+                                    <TabsTrigger
+                                        key={semester}
+                                        value={semester.toString()}
+                                        className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6"
+                                    >
+                                        Semester {semester}
+                                    </TabsTrigger>
+                                ))}
+                            </TabsList>
+
+                            {allSemesters.map((semester) => {
+                                const staticData = timetableData.find(t => t.semester === semester);
+                                const dbItems = timetablesBySemester?.[semester] || [];
+
+                                return (
+                                    <TabsContent key={semester} value={semester.toString()} className="space-y-8">
+                                        {/* Static Schedules (Grid) */}
+                                        {staticData && (
+                                            <div className="space-y-8 mb-8">
+                                                {staticData.divisions.map((div) => (
+                                                    <TimetableGrid
+                                                        key={div.name}
+                                                        division={div}
+                                                        termDate={staticData.termDate}
+                                                    />
+                                                ))}
+                                            </div>
+                                        )}
+
+                                        {/* Database Downloads (PDFs) */}
+                                        {dbItems.length > 0 && (
+                                            <Card>
+                                                <CardHeader>
+                                                    <CardTitle className="flex items-center gap-2">
+                                                        <Calendar className="h-5 w-5 text-primary" />
+                                                        Downloadable Schedules
+                                                    </CardTitle>
+                                                </CardHeader>
+                                                <CardContent>
+                                                    <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                                        {dbItems.map((item: any) => (
+                                                            <div
+                                                                key={item.id}
+                                                                className="flex items-center justify-between p-4 rounded-lg border hover:bg-muted/50 transition-colors"
+                                                            >
+                                                                <div className="flex items-center gap-3 flex-1 min-w-0">
+                                                                    <Calendar className="h-5 w-5 text-muted-foreground shrink-0" />
+                                                                    <div className="min-w-0">
+                                                                        <p className="font-medium truncate">{item.title}</p>
+                                                                        <div className="flex items-center gap-2 mt-1">
+                                                                            {item.division && (
+                                                                                <Badge variant="secondary" className="text-xs">
+                                                                                    Div {item.division}
+                                                                                </Badge>
+                                                                            )}
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <Button
+                                                                    size="sm"
+                                                                    variant="ghost"
+                                                                    asChild
+                                                                >
+                                                                    <a
+                                                                        href={item.file_url}
+                                                                        target="_blank"
+                                                                        rel="noopener noreferrer"
+                                                                    >
+                                                                        <ExternalLink className="h-4 w-4" />
+                                                                    </a>
+                                                                </Button>
                                                             </div>
-                                                        </div>
+                                                        ))}
                                                     </div>
-                                                    <Button
-                                                        size="sm"
-                                                        variant="ghost"
-                                                        asChild
-                                                    >
-                                                        <a
-                                                            href={item.file_url}
-                                                            target="_blank"
-                                                            rel="noopener noreferrer"
-                                                        >
-                                                            <ExternalLink className="h-4 w-4" />
-                                                        </a>
-                                                    </Button>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </CardContent>
-                                </Card>
-                            ))}
-                        </div>
+                                                </CardContent>
+                                            </Card>
+                                        )}
+
+                                        {!staticData && dbItems.length === 0 && (
+                                            <p className="text-center text-muted-foreground py-8">
+                                                No schedule available for this semester.
+                                            </p>
+                                        )}
+                                    </TabsContent>
+                                );
+                            })}
+                        </Tabs>
                     ) : (
                         <Card className="border-dashed">
                             <CardContent className="p-12 text-center">
@@ -146,8 +191,7 @@ const Timetable = () => {
                     <Card className="mt-8 border-primary/30 bg-lavender-light">
                         <CardContent className="p-6">
                             <p className="text-sm text-muted-foreground">
-                                <strong>Note:</strong> Timetables are subject to change.
-                                Please verify with your class coordinator for the latest updates.
+                                <strong>Note:</strong> Timetables are subject to change. Please check regularly for updates.
                             </p>
                         </CardContent>
                     </Card>
