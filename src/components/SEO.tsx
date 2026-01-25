@@ -13,7 +13,7 @@ const SEO = ({
     description,
     keywords = "IT Department, Polytechnic, Himatnagar, Engineering, Education, Technology",
     image = "/og-image.png",
-    url = "https://gph-it-web.netlify.app"
+    url = "https://itgph.netlify.app"
 }: SEOProps) => {
     const fullTitle = `${title} | IT Dept - GP Himatnagar`;
 
