@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { Phone, Mail, MapPin, ExternalLink } from "lucide-react";
+import { Phone, Mail, MapPin, ExternalLink, Instagram } from "lucide-react";
 
 const quickLinks = [
   { title: "About Us", href: "/about" },
@@ -149,6 +149,17 @@ export const Footer = () => {
         <div className="mt-8 text-center text-sm opacity-60">
           <p>© {new Date().getFullYear()} Information Technology Department, Government Polytechnic Himatnagar.</p>
           <p className="mt-1">All rights reserved.</p>
+          <div className="mt-4 flex items-center justify-center gap-2">
+            <span className="text-xs">Developed by @cyberidfc</span>
+            <a
+              href="https://www.instagram.com/cyberidfc/?hl=en"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:opacity-100 opacity-70 transition-opacity"
+            >
+              <Instagram className="h-4 w-4" />
+            </a>
+          </div>
         </div>
       </div>
     </footer>

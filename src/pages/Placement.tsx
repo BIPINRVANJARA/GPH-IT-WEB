@@ -9,7 +9,7 @@ const placementStats = [
   { label: "Placement Rate", value: "95%", icon: TrendingUp },
   { label: "Companies Visited", value: "50+", icon: Building },
   { label: "Students Placed", value: "500+", icon: Users },
-  { label: "Highest Package", value: "₹6 LPA", icon: Award },
+  { label: "Highest Package", value: "₹4 LPA", icon: Award },
 ];
 
 const recruiters = [
