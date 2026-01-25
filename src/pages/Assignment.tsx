@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { supabase } from "@/integrations/supabase/client";
+import { downloadFile } from "@/lib/utils";
 
 const Assignment = () => {
     const { data: assignments, isLoading } = useQuery({
@@ -105,17 +106,17 @@ const Assignment = () => {
                                             </CardTitle>
                                         </CardHeader>
                                         <CardContent>
-                                            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+                                            <div className="grid gap-4 md:grid-cols-1">
                                                 {assignmentsBySemester[semester]?.map((item: any) => (
                                                     <div
                                                         key={item.id}
-                                                        className="flex items-center justify-between p-4 rounded-lg border hover:bg-muted/50 transition-colors"
+                                                        className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg border hover:bg-muted/50 transition-colors gap-4"
                                                     >
-                                                        <div className="flex items-center gap-3 flex-1 min-w-0">
-                                                            <FileText className="h-5 w-5 text-muted-foreground shrink-0" />
+                                                        <div className="flex items-start gap-3 min-w-0">
+                                                            <FileText className="h-5 w-5 text-muted-foreground shrink-0 mt-1 sm:mt-0" />
                                                             <div className="min-w-0">
-                                                                <p className="font-medium truncate">{item.title}</p>
-                                                                <div className="flex items-center gap-2 mt-1">
+                                                                <p className="font-medium line-clamp-2">{item.title}</p>
+                                                                <div className="flex items-center gap-2 mt-1 flex-wrap">
                                                                     <Badge variant="secondary" className="text-xs">
                                                                         {item.subject}
                                                                     </Badge>
@@ -127,7 +128,7 @@ const Assignment = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <div className="flex gap-2">
+                                                        <div className="flex gap-2 self-end sm:self-center shrink-0">
                                                             <Button
                                                                 size="sm"
                                                                 variant="ghost"
@@ -144,16 +145,10 @@ const Assignment = () => {
                                                             <Button
                                                                 size="sm"
                                                                 variant="outline"
-                                                                asChild
+                                                                onClick={() => downloadFile(item.file_url, `${item.title}.pdf`)}
                                                             >
-                                                                <a
-                                                                    href={item.file_url}
-                                                                    download
-                                                                    target="_blank"
-                                                                    rel="noopener noreferrer"
-                                                                >
-                                                                    <Download className="h-4 w-4" />
-                                                                </a>
+                                                                <Download className="h-4 w-4 mr-1" />
+                                                                <span className="sr-only sm:not-sr-only sm:inline-block">Download</span>
                                                             </Button>
                                                         </div>
                                                     </div>
