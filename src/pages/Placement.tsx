@@ -1,7 +1,9 @@
 import { Layout } from "@/components/layout/Layout";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { TrendingUp, Building, Users, Award, Briefcase } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 
 const placementStats = [
   { label: "Placement Rate", value: "95%", icon: TrendingUp },
@@ -16,16 +18,21 @@ const recruiters = [
   "Simform", "Bacancy Technology", "Azilen Technologies", "Silver Touch"
 ];
 
-const recentPlacements = [
-  { name: "Rahul Patel", company: "TCS", package: "₹3.5 LPA", year: "2025" },
-  { name: "Priya Shah", company: "Infosys", package: "₹4.0 LPA", year: "2025" },
-  { name: "Amit Kumar", company: "Wipro", package: "₹3.8 LPA", year: "2025" },
-  { name: "Sneha Desai", company: "Tech Mahindra", package: "₹4.2 LPA", year: "2025" },
-  { name: "Vikram Singh", company: "Cognizant", package: "₹4.5 LPA", year: "2025" },
-  { name: "Neha Sharma", company: "Simform", package: "₹5.0 LPA", year: "2025" },
-];
-
 const Placement = () => {
+  const { data: placements, isLoading } = useQuery({
+    queryKey: ["placements"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("placements")
+        .select("*")
+        .eq("is_published", true)
+        .order("year", { ascending: false });
+
+      if (error) throw error;
+      return data;
+    }
+  });
+
   return (
     <Layout>
       {/* Hero */}
@@ -91,9 +98,9 @@ const Placement = () => {
           <h2 className="text-2xl font-bold mb-8 text-center">Our Recruiters</h2>
           <div className="flex flex-wrap justify-center gap-4">
             {recruiters.map((company) => (
-              <Badge 
-                key={company} 
-                variant="secondary" 
+              <Badge
+                key={company}
+                variant="secondary"
                 className="px-4 py-2 text-sm"
               >
                 {company}
@@ -107,25 +114,33 @@ const Placement = () => {
       <section className="py-16">
         <div className="container">
           <h2 className="text-2xl font-bold mb-8 text-center">Recent Placements</h2>
-          <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-            {recentPlacements.map((placement, index) => (
-              <Card key={index}>
-                <CardContent className="flex items-center gap-4 p-6">
-                  <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
-                    <Briefcase className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-semibold">{placement.name}</p>
-                    <p className="text-sm text-muted-foreground">{placement.company}</p>
-                    <div className="flex gap-2 mt-1">
-                      <Badge variant="outline" className="text-xs">{placement.package}</Badge>
-                      <Badge variant="secondary" className="text-xs">{placement.year}</Badge>
+          {isLoading ? (
+            <div className="flex justify-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary"></div>
+            </div>
+          ) : placements?.length === 0 ? (
+            <p className="text-center text-muted-foreground">No placement records found.</p>
+          ) : (
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+              {placements?.map((placement, index) => (
+                <Card key={placement.id || index}>
+                  <CardContent className="flex items-center gap-4 p-6">
+                    <div className="flex h-12 w-12 items-center justify-center rounded-full bg-primary/10">
+                      <Briefcase className="h-5 w-5 text-primary" />
                     </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
+                    <div>
+                      <p className="font-semibold">{placement.student_name}</p>
+                      <p className="text-sm text-muted-foreground">{placement.company_name}</p>
+                      <div className="flex gap-2 mt-1">
+                        {placement.package && <Badge variant="outline" className="text-xs">{placement.package}</Badge>}
+                        {placement.year && <Badge variant="secondary" className="text-xs">{placement.year}</Badge>}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
         </div>
       </section>
     </Layout>

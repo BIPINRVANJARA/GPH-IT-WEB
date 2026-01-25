@@ -5,14 +5,20 @@ import { Button } from "@/components/ui/button";
 import { ClipboardList, FileText, Loader2, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
-// import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
 
 const Assignment = () => {
     const { data: assignments, isLoading } = useQuery({
         queryKey: ["assignments"],
         queryFn: async () => {
-            // Mock data for now
-            return [];
+            const { data, error } = await supabase
+                .from("assignments")
+                .select("*")
+                .eq("is_published", true)
+                .order("due_date", { ascending: true });
+
+            if (error) throw error;
+            return data;
         },
     });
 

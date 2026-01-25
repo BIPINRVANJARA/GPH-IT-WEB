@@ -5,22 +5,20 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Download, Clock, Loader2, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
-// import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
 
 const Timetable = () => {
     const { data: timetables, isLoading } = useQuery({
         queryKey: ["timetables"],
         queryFn: async () => {
-            // Mock data for now to avoid Supabase errors until table exists
-            // const { data, error } = await supabase
-            //   .from("timetables")
-            //   .select("*")
-            //   .eq("is_published", true)
-            //   .order("semester", { ascending: true });
+            const { data, error } = await supabase
+                .from("timetables")
+                .select("*")
+                .eq("is_published", true)
+                .order("semester", { ascending: true });
 
-            // if (error) throw error;
-            // return data;
-            return [];
+            if (error) throw error;
+            return data;
         },
     });
 

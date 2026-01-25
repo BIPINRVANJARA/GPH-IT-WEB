@@ -5,14 +5,19 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, Book, Loader2, ExternalLink } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
-// import { supabase } from "@/integrations/supabase/client";
+import { supabase } from "@/integrations/supabase/client";
 
 const LabManual = () => {
     const { data: manuals, isLoading } = useQuery({
         queryKey: ["lab-manuals"],
         queryFn: async () => {
-            // Mock data for now
-            return [];
+            const { data, error } = await supabase
+                .from("lab_manuals")
+                .select("*")
+                .eq("is_published", true)
+                .order("title");
+            if (error) throw error;
+            return data;
         },
     });
 
