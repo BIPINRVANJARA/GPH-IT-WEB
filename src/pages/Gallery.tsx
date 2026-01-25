@@ -7,24 +7,13 @@ import { Button } from "@/components/ui/button";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 
 // Placeholder images for initial display
-const placeholderImages = [
-  { id: "1", title: "Computer Lab", description: "State-of-the-art computer laboratory", category: "infrastructure", image_url: "/placeholder.svg" },
-  { id: "2", title: "Classroom", description: "Modern classroom facilities", category: "infrastructure", image_url: "/placeholder.svg" },
-  { id: "3", title: "Annual Day 2024", description: "Students performing at annual day celebration", category: "events", image_url: "/placeholder.svg" },
-  { id: "4", title: "Technical Fest", description: "Students showcasing their projects", category: "events", image_url: "/placeholder.svg" },
-  { id: "5", title: "Library", description: "Well-equipped departmental library", category: "infrastructure", image_url: "/placeholder.svg" },
-  { id: "6", title: "Seminar Hall", description: "Seminar hall for presentations", category: "infrastructure", image_url: "/placeholder.svg" },
-  { id: "7", title: "Sports Day", description: "Students participating in sports events", category: "events", image_url: "/placeholder.svg" },
-  { id: "8", title: "Industrial Visit", description: "Students on industrial visit", category: "activities", image_url: "/placeholder.svg" },
-];
 
-const categories = ["all", "infrastructure", "events", "activities", "achievements"];
 
 const Gallery = () => {
   const [selectedCategory, setSelectedCategory] = useState("all");
   const [selectedImage, setSelectedImage] = useState<number | null>(null);
 
-  const { data: galleryImages } = useQuery({
+  const { data: galleryImages, isLoading } = useQuery({
     queryKey: ["gallery"],
     queryFn: async () => {
       const { data, error } = await supabase
@@ -32,16 +21,20 @@ const Gallery = () => {
         .select("*")
         .eq("is_published", true)
         .order("created_at", { ascending: false });
-      
+
       if (error) throw error;
       return data;
     },
   });
 
-  const images = galleryImages && galleryImages.length > 0 ? galleryImages : placeholderImages;
-  
-  const filteredImages = selectedCategory === "all" 
-    ? images 
+  // Extract unique categories from images
+  const uniqueCategories = Array.from(new Set(galleryImages?.map(img => img.category).filter(Boolean))) as string[];
+  const categories = ["all", ...uniqueCategories.sort()];
+
+  const images = galleryImages && galleryImages.length > 0 ? galleryImages : [];
+
+  const filteredImages = selectedCategory === "all"
+    ? images
     : images.filter(img => img.category === selectedCategory);
 
   const handlePrevious = () => {
@@ -130,7 +123,7 @@ const Gallery = () => {
               >
                 <X className="h-6 w-6" />
               </Button>
-              
+
               <div className="flex items-center justify-center min-h-[60vh]">
                 <Button
                   variant="ghost"
@@ -141,13 +134,13 @@ const Gallery = () => {
                 >
                   <ChevronLeft className="h-8 w-8" />
                 </Button>
-                
+
                 <img
                   src={filteredImages[selectedImage].image_url}
                   alt={filteredImages[selectedImage].title}
                   className="max-h-[80vh] max-w-full object-contain"
                 />
-                
+
                 <Button
                   variant="ghost"
                   size="icon"
@@ -158,7 +151,7 @@ const Gallery = () => {
                   <ChevronRight className="h-8 w-8" />
                 </Button>
               </div>
-              
+
               <div className="p-4 text-center text-white">
                 <h3 className="text-xl font-semibold">{filteredImages[selectedImage].title}</h3>
                 <p className="text-white/70">{filteredImages[selectedImage].description}</p>

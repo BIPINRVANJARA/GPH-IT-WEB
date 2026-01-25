@@ -28,6 +28,8 @@ import { AdminNewsletterSection } from "@/components/admin/AdminNewsletterSectio
 import { AdminTimetableSection } from "@/components/admin/AdminTimetableSection";
 import { AdminAssignmentSection } from "@/components/admin/AdminAssignmentSection";
 import { AdminLabManualSection } from "@/components/admin/AdminLabManualSection";
+import { AdminInfrastructureSection } from "@/components/admin/AdminInfrastructureSection";
+import { Building } from "lucide-react";
 
 const Admin = () => {
   const [user, setUser] = useState<any>(null);
@@ -155,6 +157,10 @@ const Admin = () => {
               <Briefcase className="h-4 w-4" />
               <span className="hidden sm:inline">Lab Manual</span>
             </TabsTrigger>
+            <TabsTrigger value="infrastructure" className="flex items-center gap-2">
+              <Building className="h-4 w-4" />
+              <span className="hidden sm:inline">Infrastructure</span>
+            </TabsTrigger>
           </TabsList>
 
           <TabsContent value="news">
@@ -203,6 +209,10 @@ const Admin = () => {
 
           <TabsContent value="labmanual">
             <AdminLabManualSection />
+          </TabsContent>
+
+          <TabsContent value="infrastructure">
+            <AdminInfrastructureSection />
           </TabsContent>
         </Tabs>
       </main>

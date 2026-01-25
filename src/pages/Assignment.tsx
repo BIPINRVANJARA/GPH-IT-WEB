@@ -2,7 +2,7 @@ import { Layout } from "@/components/layout/Layout";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ClipboardList, FileText, Loader2, ExternalLink } from "lucide-react";
+import { ClipboardList, FileText, Loader2, ExternalLink, Download } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import SEO from "@/components/SEO";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -127,19 +127,35 @@ const Assignment = () => {
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <Button
-                                                            size="sm"
-                                                            variant="ghost"
-                                                            asChild
-                                                        >
-                                                            <a
-                                                                href={item.file_url}
-                                                                target="_blank"
-                                                                rel="noopener noreferrer"
+                                                        <div className="flex gap-2">
+                                                            <Button
+                                                                size="sm"
+                                                                variant="ghost"
+                                                                asChild
                                                             >
-                                                                <ExternalLink className="h-4 w-4" />
-                                                            </a>
-                                                        </Button>
+                                                                <a
+                                                                    href={item.file_url}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <ExternalLink className="h-4 w-4" />
+                                                                </a>
+                                                            </Button>
+                                                            <Button
+                                                                size="sm"
+                                                                variant="outline"
+                                                                asChild
+                                                            >
+                                                                <a
+                                                                    href={item.file_url}
+                                                                    download
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <Download className="h-4 w-4" />
+                                                                </a>
+                                                            </Button>
+                                                        </div>
                                                     </div>
                                                 ))}
                                             </div>

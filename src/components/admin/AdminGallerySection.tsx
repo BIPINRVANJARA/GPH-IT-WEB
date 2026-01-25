@@ -129,14 +129,14 @@ export const AdminGallerySection = () => {
       toast({ title: "Error", description: "Please provide an image URL or upload an image.", variant: "destructive" });
       return;
     }
-    
-    const data = { 
-      title, 
-      description: description || undefined, 
+
+    const data = {
+      title,
+      description: description || undefined,
       image_url: imageUrl,
-      category 
+      category
     };
-    
+
     if (editingId) {
       updateMutation.mutate({ id: editingId, data });
     } else {
@@ -189,18 +189,24 @@ export const AdminGallerySection = () => {
               </div>
               <div>
                 <Label htmlFor="category">Category</Label>
-                <Select value={category} onValueChange={setCategory}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select category" />
-                  </SelectTrigger>
-                  <SelectContent>
+                <div className="flex flex-col gap-2">
+                  <Input
+                    id="category"
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    placeholder="e.g. events, infrastructure, sports"
+                    list="category-suggestions"
+                    required
+                  />
+                  <datalist id="category-suggestions">
                     {categories.map((cat) => (
-                      <SelectItem key={cat} value={cat} className="capitalize">
-                        {cat}
-                      </SelectItem>
+                      <option key={cat} value={cat} />
                     ))}
-                  </SelectContent>
-                </Select>
+                  </datalist>
+                  <p className="text-xs text-muted-foreground">
+                    Type a new category or select from existing ones.
+                  </p>
+                </div>
               </div>
               <div>
                 <Label>Image</Label>
