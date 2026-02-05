@@ -72,9 +72,9 @@ const TopBar = () => (
           <Phone className="h-3 w-3" />
           <span>2772229285</span>
         </a>
-        <a href="mailto:gphit@gmail.com" className="flex items-center gap-1.5 hover:underline">
+        <a href="mailto:gphdit1@gmail.com" className="flex items-center gap-1.5 hover:underline">
           <Mail className="h-3 w-3" />
-          <span>gphit@gmail.com</span>
+          <span>gphdit1@gmail.com</span>
         </a>
       </div>
       <div className="hidden sm:flex items-center gap-1.5 text-xs">

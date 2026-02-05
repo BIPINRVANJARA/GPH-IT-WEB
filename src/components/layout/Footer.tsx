@@ -118,11 +118,11 @@ export const Footer = () => {
               </li>
               <li>
                 <a
-                  href="mailto:gphit@gmail.com"
+                  href="mailto:gphdit1@gmail.com"
                   className="flex items-center gap-2 text-sm opacity-80 transition-opacity hover:opacity-100"
                 >
                   <Mail className="h-4 w-4" />
-                  gphit@gmail.com (Department)
+                  gphdit1@gmail.com (Department)
                 </a>
               </li>
             </ul>

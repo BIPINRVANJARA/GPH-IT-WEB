@@ -79,8 +79,8 @@ const Contact = () => {
                       <a href="mailto:gp-himatnagar-dte@gujarat.gov.in" className="block text-sm text-muted-foreground hover:text-primary">
                         gp-himatnagar-dte@gujarat.gov.in (Institute)
                       </a>
-                      <a href="mailto:gphit@gmail.com" className="block text-sm text-muted-foreground hover:text-primary">
-                        gphit@gmail.com (Department)
+                      <a href="mailto:gphdit1@gmail.com" className="block text-sm text-muted-foreground hover:text-primary">
+                        gphdit1@gmail.com (Department)
                       </a>
                     </div>
                   </CardContent>
