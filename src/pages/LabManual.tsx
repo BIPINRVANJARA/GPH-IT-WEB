@@ -1,0 +1,181 @@
+import { Layout } from "@/components/layout/Layout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { BookOpen, Book, Loader2, ExternalLink, Download } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
+import SEO from "@/components/SEO";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { supabase } from "@/integrations/supabase/client";
+import { downloadFile } from "@/lib/utils";
+
+const LabManual = () => {
+    const { data: manuals, isLoading } = useQuery({
+        queryKey: ["lab-manuals"],
+        queryFn: async () => {
+            const { data, error } = await supabase
+                .from("lab_manuals")
+                .select("*")
+                .eq("is_published", true)
+                .order("title");
+            if (error) throw error;
+            return data;
+        },
+    });
+
+    // Group by semester
+    const manualsBySemester = manuals?.reduce((acc: any, item: any) => {
+        const sem = item.semester || 0;
+        if (!acc[sem]) {
+            acc[sem] = [];
+        }
+        acc[sem].push(item);
+        return acc;
+    }, {} as Record<number, any[]>) || {};
+
+    const semesters = Object.keys(manualsBySemester).map(Number).sort((a, b) => a - b);
+
+    return (
+        <Layout>
+            <SEO
+                title="Lab Manuals"
+                description="Download practical lab manuals for all subjects."
+                keywords="Lab Manuals, Practical, Experiments, IP Department"
+            />
+            {/* Hero */}
+            <section className="gradient-primary py-16 text-primary-foreground">
+                <div className="container">
+                    <h1 className="text-4xl font-bold mb-4">Lab Manuals</h1>
+                    <p className="text-lg opacity-90 max-w-2xl">
+                        Download practical lab manuals and experiment lists.
+                    </p>
+                </div>
+            </section>
+
+            {/* Quick Stats */}
+            <section className="py-8 bg-muted/50">
+                <div className="container">
+                    <div className="flex flex-wrap justify-center gap-8">
+                        <div className="flex items-center gap-3">
+                            <Book className="h-6 w-6 text-primary" />
+                            <div>
+                                <p className="font-bold">{manuals?.length || 0}</p>
+                                <p className="text-sm text-muted-foreground">Manuals</p>
+                            </div>
+                        </div>
+                        <div className="flex items-center gap-3">
+                            <BookOpen className="h-6 w-6 text-primary" />
+                            <div>
+                                <p className="font-bold">{semesters.length}</p>
+                                <p className="text-sm text-muted-foreground">Semesters</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            {/* Manuals by Semester */}
+            <section className="py-16">
+                <div className="container">
+                    {isLoading ? (
+                        <div className="flex items-center justify-center py-12">
+                            <Loader2 className="h-8 w-8 animate-spin text-primary" />
+                        </div>
+                    ) : semesters.length > 0 ? (
+                        <Tabs defaultValue={semesters[0].toString()} className="space-y-8">
+                            <TabsList className="flex flex-wrap h-auto gap-2 bg-transparent justify-center">
+                                {semesters.map((semester) => (
+                                    <TabsTrigger
+                                        key={semester}
+                                        value={semester.toString()}
+                                        className="data-[state=active]:bg-primary data-[state=active]:text-primary-foreground px-6"
+                                    >
+                                        Semester {semester}
+                                    </TabsTrigger>
+                                ))}
+                            </TabsList>
+
+                            {semesters.map((semester) => (
+                                <TabsContent key={semester} value={semester.toString()}>
+                                    <Card>
+                                        <CardHeader>
+                                            <CardTitle className="flex items-center gap-2">
+                                                <BookOpen className="h-5 w-5 text-primary" />
+                                                Semester {semester} Manuals
+                                            </CardTitle>
+                                        </CardHeader>
+                                        <CardContent>
+                                            <div className="grid gap-4 md:grid-cols-1">
+                                                {manualsBySemester[semester]?.map((item: any) => (
+                                                    <div
+                                                        key={item.id}
+                                                        className="flex flex-col sm:flex-row sm:items-center justify-between p-4 rounded-lg border hover:bg-muted/50 transition-colors gap-4"
+                                                    >
+                                                        <div className="flex items-start gap-3 min-w-0">
+                                                            <Book className="h-5 w-5 text-muted-foreground shrink-0 mt-1 sm:mt-0" />
+                                                            <div className="min-w-0">
+                                                                <p className="font-medium line-clamp-2">{item.title}</p>
+                                                                <div className="flex items-center gap-2 mt-1 flex-wrap">
+                                                                    <Badge variant="secondary" className="text-xs">
+                                                                        {item.subject}
+                                                                    </Badge>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div className="flex gap-2 self-end sm:self-center shrink-0">
+                                                            <Button
+                                                                size="sm"
+                                                                variant="ghost"
+                                                                asChild
+                                                            >
+                                                                <a
+                                                                    href={item.file_url}
+                                                                    target="_blank"
+                                                                    rel="noopener noreferrer"
+                                                                >
+                                                                    <ExternalLink className="h-4 w-4" />
+                                                                </a>
+                                                            </Button>
+                                                            <Button
+                                                                size="sm"
+                                                                variant="outline"
+                                                                onClick={() => downloadFile(item.file_url, `${item.title}.pdf`)}
+                                                            >
+                                                                <Download className="h-4 w-4 mr-1" />
+                                                                <span className="sr-only sm:not-sr-only sm:inline-block">Download</span>
+                                                            </Button>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </CardContent>
+                                    </Card>
+                                </TabsContent>
+                            ))}
+                        </Tabs>
+                    ) : (
+                        <Card className="border-dashed">
+                            <CardContent className="p-12 text-center">
+                                <Book className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
+                                <p className="text-muted-foreground">
+                                    No lab manuals published yet. Please check back later.
+                                </p>
+                            </CardContent>
+                        </Card>
+                    )}
+
+                    {/* Note */}
+                    <Card className="mt-8 border-primary/30 bg-lavender-light">
+                        <CardContent className="p-6">
+                            <p className="text-sm text-muted-foreground">
+                                <strong>Note:</strong> Perform experiments safely and follow all lab instructions.
+                            </p>
+                        </CardContent>
+                    </Card>
+                </div>
+            </section>
+        </Layout>
+    );
+};
+
+export default LabManual;
